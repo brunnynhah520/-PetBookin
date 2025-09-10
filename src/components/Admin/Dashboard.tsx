@@ -134,6 +134,7 @@ export default function Dashboard() {
             )}
             {viewMode === 'settings' && <Settings />}
           </div>
+        </div>
       </div>
     </div>
   );
