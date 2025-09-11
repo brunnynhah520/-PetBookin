@@ -130,62 +130,100 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
 
       {/* Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
+        >
           <div className="flex items-center space-x-2">
-            <Calendar className="w-5 h-5 text-blue-600" />
+            <div className="bg-blue-500 p-2 rounded-lg">
+              <Calendar className="w-4 h-4 text-white" />
+            </div>
             <div>
-              <p className="text-2xl font-bold text-blue-900">{dayBookings.length}</p>
-              <p className="text-sm text-blue-600">Total</p>
+              <p className="text-xl font-bold text-blue-900">{dayBookings.length}</p>
+              <p className="text-xs text-blue-600 font-medium">Total Bookings</p>
             </div>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
+        >
           <div className="flex items-center space-x-2">
-            <Clock className="w-5 h-5 text-yellow-600" />
+            <div className="bg-yellow-500 p-2 rounded-lg">
+              <Clock className="w-4 h-4 text-white" />
+            </div>
             <div>
-              <p className="text-2xl font-bold text-yellow-900">
+              <p className="text-xl font-bold text-yellow-900">
                 {dayBookings.filter(b => b.status === 'pendente').length}
               </p>
-              <p className="text-sm text-yellow-600">Pending</p>
+              <p className="text-xs text-yellow-600 font-medium">Pending</p>
             </div>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
+        >
           <div className="flex items-center space-x-2">
-            <User className="w-5 h-5 text-green-600" />
+            <div className="bg-green-500 p-2 rounded-lg">
+              <User className="w-4 h-4 text-white" />
+            </div>
             <div>
-              <p className="text-2xl font-bold text-green-900">
+              <p className="text-xl font-bold text-green-900">
                 {dayBookings.filter(b => b.status === 'confirmado').length}
               </p>
-              <p className="text-sm text-green-600">Confirmed</p>
+              <p className="text-xs text-green-600 font-medium">Confirmed</p>
             </div>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200"
+        >
           <div className="flex items-center space-x-2">
-            <PawPrint className="w-5 h-5 text-gray-600" />
+            <div className="bg-gray-500 p-2 rounded-lg">
+              <PawPrint className="w-4 h-4 text-white" />
+            </div>
             <div>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xl font-bold text-gray-900">
                 {dayBookings.filter(b => b.status === 'concluido').length}
               </p>
-              <p className="text-sm text-gray-600">Completed</p>
+              <p className="text-xs text-gray-600 font-medium">Completed</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Time Slots Grid */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4">
-          <h3 className="text-lg font-semibold">Daily Schedule</h3>
-          <p className="text-blue-100 text-sm">Click on time slots to edit bookings or block times</p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-lg"
+      >
+        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 text-white p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold">Daily Schedule</h3>
+              <p className="text-blue-100 text-sm mt-1">Click on time slots to edit bookings or block times</p>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+              <Calendar className="w-6 h-6" />
+            </div>
+          </div>
         </div>
 
-        <div className="p-4">
-          <div className="grid gap-2">
+        <div className="p-6">
+          <div className="grid gap-3">
             {timeSlots.map((slot, index) => {
               const booking = getBookingForTimeSlot(slot.time);
               const isBlocked = isSlotBlocked(slot.time);
@@ -200,59 +238,74 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
                   onClick={() => !isLunchTime && handleSlotClick(slot.time)}
                   className={`p-4 rounded-lg border-2 transition-all duration-200 cursor-pointer ${
                     booking
-                      ? `${getStatusColor(booking.status)} hover:shadow-md`
+                      ? `${getStatusColor(booking.status)} hover:shadow-lg transform hover:scale-[1.02]`
                       : isBlocked
-                      ? 'bg-red-50 border-red-200 text-red-700 hover:bg-red-100'
+                      ? 'bg-gradient-to-r from-red-50 to-red-100 border-red-300 text-red-700 hover:from-red-100 hover:to-red-200 shadow-sm'
                       : isLunchTime
-                      ? 'bg-gray-100 border-gray-200 text-gray-500 cursor-not-allowed'
-                      : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-200'
+                      ? 'bg-gradient-to-r from-gray-100 to-gray-200 border-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 text-gray-600 hover:from-blue-50 hover:to-blue-100 hover:border-blue-300 hover:shadow-md transform hover:scale-[1.02]'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between min-h-[60px]">
                     <div className="flex items-center space-x-3">
                       <div className="flex items-center space-x-2">
-                        <Clock className="w-4 h-4" />
-                        <span className="font-medium">{slot.time}</span>
+                        <div className={`p-2 rounded-lg ${
+                          booking ? 'bg-white/20' : 
+                          isBlocked ? 'bg-red-200' : 
+                          isLunchTime ? 'bg-gray-300' : 'bg-blue-100'
+                        }`}>
+                          <Clock className="w-4 h-4" />
+                        </div>
+                        <span className="font-bold text-lg">{slot.time}</span>
                       </div>
                       
                       {booking && (
-                        <div className="flex items-center space-x-4">
+                        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1 md:space-y-0">
                           <div className="flex items-center space-x-2">
-                            <User className="w-4 h-4" />
-                            <span className="font-medium">{booking.customer.name}</span>
+                            <div className="bg-white/30 p-1 rounded">
+                              <User className="w-3 h-3" />
+                            </div>
+                            <span className="font-semibold text-sm">{booking.customer.name}</span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <PawPrint className="w-4 h-4" />
-                            <span>{booking.pet.name}</span>
+                            <div className="bg-white/30 p-1 rounded">
+                              <PawPrint className="w-3 h-3" />
+                            </div>
+                            <span className="font-medium text-sm">{booking.pet.name}</span>
                           </div>
                         </div>
                       )}
                       
                       {isBlocked && (
                         <div className="flex items-center space-x-2">
-                          <Ban className="w-4 h-4" />
-                          <span>Blocked Time</span>
+                          <Ban className="w-5 h-5" />
+                          <span className="font-semibold">Blocked Time</span>
                         </div>
                       )}
                       
                       {isLunchTime && (
-                        <span>Lunch Time</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="bg-gray-400 p-1 rounded">
+                            <Clock className="w-3 h-3 text-white" />
+                          </div>
+                          <span className="font-semibold">Lunch Time</span>
+                        </div>
                       )}
                       
                       {!booking && !isBlocked && !isLunchTime && (
-                        <div className="flex items-center space-x-2 text-gray-400">
+                        <div className="flex items-center space-x-2 text-gray-500">
                           <Plus className="w-4 h-4" />
-                          <span>Available (click to block)</span>
+                          <span className="text-sm font-medium">Available - Click to block</span>
                         </div>
                       )}
                     </div>
 
                     {booking && (
-                      <div className="text-right">
-                        <div className="text-sm text-gray-600">
+                      <div className="text-right bg-white/20 backdrop-blur-sm rounded-lg p-3">
+                        <div className="text-xs font-medium mb-1 opacity-80">
                           {booking.services.map(s => s.name).join(', ')}
                         </div>
-                        <div className="font-bold text-orange-600">
+                        <div className="font-bold text-lg">
                           ${booking.totalPrice.toFixed(2)}
                         </div>
                       </div>
@@ -263,34 +316,42 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             })}
           </div>
         </div>
-      </div>
 
       {/* Legend */}
-      <div className="mt-6 bg-gray-50 rounded-lg p-4">
-        <h4 className="font-semibold text-gray-900 mb-3">Legend:</h4>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="mt-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200"
+      >
+        <h4 className="font-bold text-gray-900 mb-4 flex items-center space-x-2">
+          <div className="bg-gray-500 p-2 rounded-lg">
+            <Calendar className="w-4 h-4 text-white" />
+          </div>
+          <span>Status Legend</span>
+        </h4>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-yellow-100 border border-yellow-200 rounded"></div>
-            <span>Pending</span>
+            <div className="w-5 h-5 bg-gradient-to-r from-yellow-100 to-yellow-200 border-2 border-yellow-300 rounded-lg shadow-sm"></div>
+            <span className="font-medium text-gray-700">Pending</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-green-100 border border-green-200 rounded"></div>
-            <span>Confirmed</span>
+            <div className="w-5 h-5 bg-gradient-to-r from-green-100 to-green-200 border-2 border-green-300 rounded-lg shadow-sm"></div>
+            <span className="font-medium text-gray-700">Confirmed</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-gray-100 border border-gray-200 rounded"></div>
-            <span>Completed</span>
+            <div className="w-5 h-5 bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-300 rounded-lg shadow-sm"></div>
+            <span className="font-medium text-gray-700">Completed</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-red-100 border border-red-200 rounded"></div>
-            <span>Cancelled/Blocked</span>
+            <div className="w-5 h-5 bg-gradient-to-r from-red-100 to-red-200 border-2 border-red-300 rounded-lg shadow-sm"></div>
+            <span className="font-medium text-gray-700">Cancelled/Blocked</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-gray-50 border border-gray-200 rounded"></div>
-            <span>Available</span>
+            <div className="w-5 h-5 bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg shadow-sm"></div>
+            <span className="font-medium text-gray-700">Available</span>
           </div>
         </div>
-      </div>
     </div>
   );
 }

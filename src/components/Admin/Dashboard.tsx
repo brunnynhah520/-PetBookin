@@ -11,7 +11,7 @@ type ViewMode = 'dashboard' | 'calendar' | 'list' | 'settings';
 type StatusFilter = 'all' | 'pendente' | 'confirmado' | 'concluido' | 'cancelado';
 
 export default function Dashboard() {
-  const [viewMode, setViewMode] = useState<ViewMode>('dashboard');
+  const [viewMode, setViewMode] = useState<ViewMode>('calendar');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const { bookings } = useAdmin();
 
