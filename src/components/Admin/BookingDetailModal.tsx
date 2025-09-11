@@ -20,7 +20,7 @@ interface FormData {
   customerCpf: string;
   petName: string;
   petBreed: string;
-  petSize: 'pequeno' | 'médio' | 'grande';
+  petSize: 'small' | 'medium' | 'large';
   date: string;
   time: string;
   services: string[];
@@ -28,7 +28,7 @@ interface FormData {
   hasTangledFur: boolean;
   isAggressive: boolean;
   tangledCharge: number;
-  status: 'pendente' | 'confirmado' | 'concluido' | 'cancelado';
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
 }
 
 export default function BookingDetailModal({ booking, isOpen, onClose }: BookingDetailModalProps) {
@@ -176,7 +176,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
       >
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Editar Agendamento</h2>
+            <h2 className="text-2xl font-bold">Edit Booking</h2>
             <button
               onClick={onClose}
               className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -191,13 +191,13 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
           <div className="bg-gray-50 rounded-xl p-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
             <select
-              {...register('status', { required: 'Status é obrigatório' })}
+              {...register('status', { required: 'Status is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
             >
-              <option value="pendente">Pendente</option>
-              <option value="confirmado">Confirmado</option>
-              <option value="concluido">Concluído</option>
-              <option value="cancelado">Cancelado</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
             </select>
           </div>
 
@@ -205,14 +205,14 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="flex items-center space-x-2 text-lg font-semibold text-blue-900 mb-4">
               <User className="w-5 h-5" />
-              <span>Dados do Cliente</span>
+              <span>Customer Information</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Nome</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                 <input
-                  {...register('customerName', { required: 'Nome é obrigatório' })}
+                  {...register('customerName', { required: 'Name is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 />
                 {errors.customerName && (
@@ -221,9 +221,9 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
                 <input
-                  {...register('customerPhone', { required: 'Telefone é obrigatório' })}
+                  {...register('customerPhone', { required: 'Phone is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 />
                 {errors.customerPhone && (
@@ -232,7 +232,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 <input
                   {...register('customerEmail')}
                   type="email"
@@ -241,9 +241,9 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">CPF</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">ID Number</label>
                 <input
-                  {...register('customerCpf', { required: 'CPF é obrigatório' })}
+                  {...register('customerCpf', { required: 'ID Number is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 />
                 {errors.customerCpf && (
@@ -257,14 +257,14 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="flex items-center space-x-2 text-lg font-semibold text-blue-900 mb-4">
               <PawPrint className="w-5 h-5" />
-              <span>Dados do Pet</span>
+              <span>Pet Information</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Nome do Pet</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Pet Name</label>
                 <input
-                  {...register('petName', { required: 'Nome do pet é obrigatório' })}
+                  {...register('petName', { required: 'Pet name is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 />
                 {errors.petName && (
@@ -273,9 +273,9 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Raça</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Breed</label>
                 <input
-                  {...register('petBreed', { required: 'Raça é obrigatória' })}
+                  {...register('petBreed', { required: 'Breed is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 />
                 {errors.petBreed && (
@@ -284,14 +284,14 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Porte</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Size</label>
                 <select
-                  {...register('petSize', { required: 'Porte é obrigatório' })}
+                  {...register('petSize', { required: 'Size is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 >
-                  <option value="pequeno">Pequeno</option>
-                  <option value="médio">Médio</option>
-                  <option value="grande">Grande</option>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
                 </select>
                 {errors.petSize && (
                   <p className="text-red-500 text-sm mt-1">{errors.petSize.message}</p>
@@ -304,14 +304,14 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="flex items-center space-x-2 text-lg font-semibold text-blue-900 mb-4">
               <Calendar className="w-5 h-5" />
-              <span>Data e Horário</span>
+              <span>Date and Time</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Data</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
                 <input
-                  {...register('date', { required: 'Data é obrigatória' })}
+                  {...register('date', { required: 'Date is required' })}
                   type="date"
                   min={new Date().toISOString().split('T')[0]}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
@@ -322,19 +322,19 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Horário</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Time</label>
                 <select
-                  {...register('time', { required: 'Horário é obrigatório' })}
+                  {...register('time', { required: 'Time is required' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 >
-                  <option value="">Selecione um horário</option>
+                  <option value="">Select a time</option>
                   {availableTimeSlots.map(slot => (
                     <option 
                       key={slot.time} 
                       value={slot.time}
                       disabled={!slot.available && slot.time !== booking.time}
                     >
-                      {slot.time} {!slot.available && slot.time !== booking.time ? '(Ocupado)' : ''}
+                      {slot.time} {!slot.available && slot.time !== booking.time ? '(Occupied)' : ''}
                     </option>
                   ))}
                 </select>
@@ -349,7 +349,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="flex items-center space-x-2 text-lg font-semibold text-blue-900 mb-4">
               <Scissors className="w-5 h-5" />
-              <span>Serviços</span>
+              <span>Services</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -372,7 +372,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
 
           {/* Extra Charges */}
           <div className="bg-white border border-gray-200 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">Taxas Extras</h3>
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">Extra Charges</h3>
 
             <div className="space-y-4">
               <label className="flex items-center space-x-3 cursor-pointer">
@@ -381,7 +381,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
                   type="checkbox"
                   className="rounded border-gray-300 text-blue-400 focus:ring-blue-400"
                 />
-                <span>Pulgas (+$20.00)</span>
+                <span>Fleas (+$20.00)</span>
               </label>
 
               <div>
@@ -391,7 +391,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
                     type="checkbox"
                     className="rounded border-gray-300 text-blue-400 focus:ring-blue-400"
                   />
-                  <span>Pelos Embolados</span>
+                  <span>Tangled Fur</span>
                 </label>
                 {watchedHasTangledFur && (
                   <input
@@ -411,7 +411,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
                   type="checkbox"
                   className="rounded border-gray-300 text-blue-400 focus:ring-blue-400"
                 />
-                <span>Pet Bravo (+50% do banho)</span>
+                <span>Aggressive Pet (+50% of bath)</span>
               </label>
             </div>
           </div>
@@ -433,7 +433,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
             >
               <Save className="w-5 h-5" />
-              <span>Salvar Alterações</span>
+              <span>Save Changes</span>
             </button>
 
             <button
@@ -442,7 +442,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               className="flex items-center space-x-2 bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors"
             >
               <Ban className="w-5 h-5" />
-              <span>Cancelar Agendamento</span>
+              <span>Cancel Booking</span>
             </button>
 
             <button
@@ -451,7 +451,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               className="flex items-center space-x-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
             >
               <Trash2 className="w-5 h-5" />
-              <span>Excluir</span>
+              <span>Delete</span>
             </button>
 
             <button
@@ -460,7 +460,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               className="flex items-center space-x-2 bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors"
             >
               <X className="w-5 h-5" />
-              <span>Fechar</span>
+              <span>Close</span>
             </button>
           </div>
         </form>

@@ -8,7 +8,7 @@ import Settings from './Settings';
 import DashboardTab from './DashboardTab';
 
 type ViewMode = 'dashboard' | 'calendar' | 'list' | 'settings';
-type StatusFilter = 'all' | 'pendente' | 'confirmado' | 'concluido' | 'cancelado';
+type StatusFilter = 'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled';
 
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState<ViewMode>('calendar');
@@ -21,10 +21,10 @@ export default function Dashboard() {
 
   const stats = {
     total: bookings.length,
-    pendente: bookings.filter(b => b.status === 'pendente').length,
-    confirmado: bookings.filter(b => b.status === 'confirmado').length,
-    concluido: bookings.filter(b => b.status === 'concluido').length,
-    cancelado: bookings.filter(b => b.status === 'cancelado').length,
+    pending: bookings.filter(b => b.status === 'pending').length,
+    confirmed: bookings.filter(b => b.status === 'confirmed').length,
+    completed: bookings.filter(b => b.status === 'completed').length,
+    cancelled: bookings.filter(b => b.status === 'cancelled').length,
   };
 
   return (
@@ -97,10 +97,10 @@ export default function Dashboard() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
               {[
                 { label: 'Total', value: stats.total, color: 'bg-blue-500' },
-                { label: 'Pending', value: stats.pendente, color: 'bg-yellow-500' },
-                { label: 'Confirmed', value: stats.confirmado, color: 'bg-green-500' },
-                { label: 'Completed', value: stats.concluido, color: 'bg-gray-500' },
-                { label: 'Cancelled', value: stats.cancelado, color: 'bg-red-500' },
+                { label: 'Pending', value: stats.pending, color: 'bg-yellow-500' },
+                { label: 'Confirmed', value: stats.confirmed, color: 'bg-green-500' },
+                { label: 'Completed', value: stats.completed, color: 'bg-gray-500' },
+                { label: 'Cancelled', value: stats.cancelled, color: 'bg-red-500' },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}

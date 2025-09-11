@@ -68,7 +68,7 @@ export default function Settings() {
                 Opening Time
               </label>
               <input
-                {...register('startTime', { required: 'Horário de abertura é obrigatório' })}
+                {...register('startTime', { required: 'Opening time is required' })}
                 type="time"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
               />
@@ -82,7 +82,7 @@ export default function Settings() {
                 Closing Time
               </label>
               <input
-                {...register('endTime', { required: 'Horário de fechamento é obrigatório' })}
+                {...register('endTime', { required: 'Closing time is required' })}
                 type="time"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
               />
@@ -97,7 +97,7 @@ export default function Settings() {
               Service Interval (minutes)
             </label>
             <select
-              {...register('serviceInterval', { required: 'Intervalo é obrigatório' })}
+              {...register('serviceInterval', { required: 'Interval is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
             >
               <option value="15">15 minutes</option>

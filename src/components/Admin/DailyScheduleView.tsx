@@ -158,7 +158,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             </div>
             <div>
               <p className="text-xl font-bold text-yellow-900">
-                {dayBookings.filter(b => b.status === 'pendente').length}
+                {dayBookings.filter(b => b.status === 'pending').length}
               </p>
               <p className="text-xs text-yellow-600 font-medium">Pending</p>
             </div>
@@ -177,7 +177,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             </div>
             <div>
               <p className="text-xl font-bold text-green-900">
-                {dayBookings.filter(b => b.status === 'confirmado').length}
+                {dayBookings.filter(b => b.status === 'confirmed').length}
               </p>
               <p className="text-xs text-green-600 font-medium">Confirmed</p>
             </div>
@@ -196,7 +196,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             </div>
             <div>
               <p className="text-xl font-bold text-gray-900">
-                {dayBookings.filter(b => b.status === 'concluido').length}
+                {dayBookings.filter(b => b.status === 'completed').length}
               </p>
               <p className="text-xs text-gray-600 font-medium">Completed</p>
             </div>

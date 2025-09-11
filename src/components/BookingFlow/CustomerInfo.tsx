@@ -70,7 +70,7 @@ export default function CustomerInfo() {
                 Full Name *
               </label>
               <input
-                {...register('customerName', { required: 'Nome é obrigatório' })}
+                {...register('customerName', { required: 'Name is required' })}
                 type="text"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                 placeholder="Your full name"
@@ -87,7 +87,7 @@ export default function CustomerInfo() {
                   Phone/WhatsApp *
                 </label>
                 <input
-                  {...register('customerPhone', { required: 'Telefone é obrigatório' })}
+                  {...register('customerPhone', { required: 'Phone is required' })}
                   type="tel"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                   placeholder="(12) 99999-9999"
@@ -116,7 +116,7 @@ export default function CustomerInfo() {
                 ID Number *
               </label>
               <input
-                {...register('customerCpf', { required: 'CPF é obrigatório' })}
+                {...register('customerCpf', { required: 'ID Number is required' })}
                 type="text"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                 placeholder="000.000.000-00"
@@ -142,7 +142,7 @@ export default function CustomerInfo() {
                   Pet Name *
                 </label>
                 <input
-                  {...register('petName', { required: 'Nome do pet é obrigatório' })}
+                  {...register('petName', { required: 'Pet name is required' })}
                   type="text"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                   placeholder="Your pet's name"
@@ -157,7 +157,7 @@ export default function CustomerInfo() {
                   Breed *
                 </label>
                 <input
-                  {...register('petBreed', { required: 'Raça é obrigatória' })}
+                  {...register('petBreed', { required: 'Breed is required' })}
                   type="text"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
                   placeholder="e.g., Labrador, Mixed breed, etc."
@@ -176,7 +176,7 @@ export default function CustomerInfo() {
                 {['small', 'medium', 'large'].map((size) => (
                   <label key={size} className="flex items-center cursor-pointer">
                     <input
-                      {...register('petSize', { required: 'Porte é obrigatório' })}
+                      {...register('petSize', { required: 'Size is required' })}
                       type="radio"
                       value={size}
                       className="sr-only"

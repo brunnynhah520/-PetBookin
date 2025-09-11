@@ -183,7 +183,7 @@ export default function ExtraCharges() {
               </label>
               <input
                 {...register('tangledCharge', { 
-                  required: hasTangledFur === true ? 'Valor é obrigatório' : false,
+                  required: hasTangledFur === true ? 'Amount is required' : false,
                   min: { value: 15, message: 'Minimum value is $15.00' }
                 })}
                 type="number"

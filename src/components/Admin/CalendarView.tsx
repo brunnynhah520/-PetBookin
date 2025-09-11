@@ -26,10 +26,10 @@ export default function CalendarView() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pendente': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'confirmado': return 'bg-green-100 text-green-800 border-green-200';
-      case 'concluido': return 'bg-gray-100 text-gray-800 border-gray-200';
-      case 'cancelado': return 'bg-red-100 text-red-800 border-red-200';
+      case 'pending': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'confirmed': return 'bg-green-100 text-green-800 border-green-200';
+      case 'completed': return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'cancelled': return 'bg-red-100 text-red-800 border-red-200';
       default: return 'bg-blue-100 text-blue-800 border-blue-200';
     }
   };
@@ -190,10 +190,10 @@ export default function CalendarView() {
         <div className="flex flex-wrap items-center gap-4 mt-6 p-4 bg-gray-50 rounded-lg">
           <span className="text-sm font-medium text-gray-700">Status:</span>
           {[
-            { status: 'pendente', label: 'Pending' },
-            { status: 'confirmado', label: 'Confirmed' },
-            { status: 'concluido', label: 'Completed' },
-            { status: 'cancelado', label: 'Cancelled' },
+            { status: 'pending', label: 'Pending' },
+            { status: 'confirmed', label: 'Confirmed' },
+            { status: 'completed', label: 'Completed' },
+            { status: 'cancelled', label: 'Cancelled' },
           ].map(({ status, label }) => (
             <div key={status} className="flex items-center space-x-2">
               <div className={`w-3 h-3 rounded border ${getStatusColor(status)}`}></div>
@@ -217,11 +217,11 @@ export default function CalendarView() {
         <div className="flex items-start space-x-3">
           <Eye className="w-5 h-5 text-blue-600 mt-1" />
           <div>
-            <h4 className="font-semibold text-blue-800 mb-1">Como usar:</h4>
+            <h4 className="font-semibold text-blue-800 mb-1">How to use:</h4>
             <ul className="text-blue-700 text-sm space-y-1">
-              <li>• Clique em qualquer dia para ver a agenda detalhada</li>
-              <li>• Clique em um agendamento para editá-lo</li>
-              <li>• Na visualização diária, clique em horários vazios para bloqueá-los</li>
+              <li>• Click on any day to see the detailed schedule</li>
+              <li>• Click on a booking to edit it</li>
+              <li>• In the daily view, click on empty slots to block them</li>
             </ul>
           </div>
         </div>
