@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, User, PawPrint, Plus, Ban } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
-import { format, addDays, subDays, isSameDay } from 'date-fns';
+import { format, addDays, subDays, isSameDay, isToday } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { generateTimeSlots } from '../../utils/dates';
 import { Booking } from '../../types';
