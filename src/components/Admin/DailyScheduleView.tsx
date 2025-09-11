@@ -38,9 +38,6 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
       settings.lunchBreak.start,
       settings.lunchBreak.end,
       bookedSlots,
-      dateBlockedSlots
-    );
-  };
 
   const getBookingForTimeSlot = (time: string) => {
     const dayBookings = getBookingsForDate(selectedDate);
@@ -355,5 +352,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
         </div>
       </motion.div>
     </div>
+  );
+}
   );
 }
