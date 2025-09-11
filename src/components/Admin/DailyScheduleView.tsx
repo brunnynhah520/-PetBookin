@@ -11,10 +11,19 @@ interface DailyScheduleViewProps {
   selectedDate: Date;
   onDateChange: (date: Date) => void;
   onBookingClick: (booking: Booking) => void;
+  onCreateBooking?: (date: Date, time: string) => void;
 }
 
-export default function DailyScheduleView({ selectedDate, onDateChange, onBookingClick }: DailyScheduleViewProps) {
+export default function DailyScheduleView({ selectedDate, onDateChange, onBookingClick, onCreateBooking }: DailyScheduleViewProps) {
   const { bookings, settings, blockedSlots, blockTimeSlot, unblockTimeSlot } = useAdmin();
+  const [availableDates] = useState(() => {
+    const dates = [];
+    const today = new Date();
+    for (let i = 0; i < 14; i++) {
+      dates.push(addDays(today, i));
+    }
+    return dates;
+  });
 
   const getBookingsForDate = (date: Date) => {
     return bookings.filter(booking => isSameDay(booking.date, date));
@@ -61,8 +70,26 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
     const booking = getBookingForTimeSlot(time);
     if (booking) {
       onBookingClick(booking);
+    } else if (onCreateBooking) {
+      // Create new booking for empty available slots
+      const timeSlots = getTimeSlotsForDate(selectedDate);
+      const slot = timeSlots.find(s => s.time === time);
+      
+      if (slot && slot.available) {
+        onCreateBooking(selectedDate, time);
+      } else {
+        // Toggle block/unblock for unavailable slots
+        const dateString = selectedDate.toISOString().split('T')[0];
+        const slotKey = `${dateString} ${time}`;
+        
+        if (blockedSlots.includes(slotKey)) {
+          unblockTimeSlot(slotKey);
+        } else {
+          blockTimeSlot(slotKey);
+        }
+      }
     } else {
-      // Toggle block/unblock for empty slots
+      // Fallback to block/unblock behavior
       const dateString = selectedDate.toISOString().split('T')[0];
       const slotKey = `${dateString} ${time}`;
       
@@ -85,6 +112,35 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
 
   return (
     <div className="p-6">
+      {/* Scrollable Date Strip */}
+      <div className="mb-6 overflow-x-auto">
+        <div className="flex space-x-3 pb-2" style={{ minWidth: 'max-content' }}>
+          {availableDates.map((date) => (
+            <button
+              key={date.toISOString()}
+              onClick={() => onDateChange(date)}
+              className={`flex-shrink-0 px-4 py-3 rounded-xl text-center transition-all duration-200 ${
+                isSameDay(date, selectedDate)
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
+                  : isToday(date)
+                  ? 'bg-orange-100 text-orange-700 border-2 border-orange-300'
+                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              <div className="text-xs font-medium">
+                {format(date, 'EEE', { locale: enUS })}
+              </div>
+              <div className="text-lg font-bold">
+                {format(date, 'd')}
+              </div>
+              <div className="text-xs opacity-75">
+                {format(date, 'MMM', { locale: enUS })}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Date Navigation */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
@@ -295,7 +351,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
                       {!booking && !isBlocked && !isLunchTime && (
                         <div className="flex items-center space-x-2 text-gray-500">
                           <Plus className="w-4 h-4" />
-                          <span className="text-sm font-medium">Available - Click to block</span>
+                          <span className="text-sm font-medium">Available - Click to book or block</span>
                         </div>
                       )}
                     </div>
@@ -352,6 +408,17 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             <div className="w-5 h-5 bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg shadow-sm"></div>
             <span className="font-medium text-gray-700">Available</span>
           </div>
+        </div>
+        
+        {/* Instructions */}
+        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <h5 className="font-semibold text-blue-800 mb-2">How to use:</h5>
+          <ul className="text-blue-700 text-sm space-y-1">
+            <li>• Click on available slots (blue) to create new bookings</li>
+            <li>• Click on existing bookings to edit them</li>
+            <li>• Click on blocked slots (red) to unblock them</li>
+            <li>• Use the date strip above to quickly navigate between days</li>
+          </ul>
         </div>
       </motion.div>
     </div>

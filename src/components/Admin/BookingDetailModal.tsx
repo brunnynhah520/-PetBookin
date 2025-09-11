@@ -9,6 +9,8 @@ import { generateTimeSlots, getAvailableDates } from '../../utils/dates';
 
 interface BookingDetailModalProps {
   booking: Booking | null;
+  mode: 'edit' | 'create';
+  initialData?: { date: Date; time: string } | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -31,8 +33,8 @@ interface FormData {
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
 }
 
-export default function BookingDetailModal({ booking, isOpen, onClose }: BookingDetailModalProps) {
-  const { updateBooking, deleteBooking, settings, bookings } = useAdmin();
+export default function BookingDetailModal({ booking, mode, initialData, isOpen, onClose }: BookingDetailModalProps) {
+  const { updateBooking, deleteBooking, addBooking, settings, bookings } = useAdmin();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<any[]>([]);
 
@@ -44,6 +46,73 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
   const watchedHasTangledFur = watch('hasTangledFur');
   const watchedIsAggressive = watch('isAggressive');
 
+  useEffect(() => {
+    if (isOpen) {
+      if (mode === 'edit' && booking) {
+        // Edit mode - populate with booking data
+        reset({
+          customerName: booking.customer.name,
+          customerPhone: booking.customer.phone,
+          customerEmail: booking.customer.email || '',
+          customerCpf: booking.customer.cpf,
+          petName: booking.pet.name,
+          petBreed: booking.pet.breed,
+          petSize: booking.pet.size,
+          date: booking.date.toISOString().split('T')[0],
+          time: booking.time,
+          services: booking.services.map(s => s.id),
+          hasFleas: booking.extraCharges.fleas,
+          hasTangledFur: booking.extraCharges.tangled,
+          isAggressive: booking.extraCharges.aggressive,
+          tangledCharge: booking.extraCharges.tangledCharge,
+          status: booking.status,
+        });
+        setSelectedDate(booking.date);
+      } else if (mode === 'create' && initialData) {
+        // Create mode - populate with initial data
+        reset({
+          customerName: '',
+          customerPhone: '',
+          customerEmail: '',
+          customerCpf: '',
+          petName: '',
+          petBreed: '',
+          petSize: 'medium',
+          date: initialData.date.toISOString().split('T')[0],
+          time: initialData.time,
+          services: [],
+          hasFleas: false,
+          hasTangledFur: false,
+          isAggressive: false,
+          tangledCharge: 15,
+          status: 'pending',
+        });
+        setSelectedDate(initialData.date);
+      } else {
+        // Fallback reset
+        reset({
+          customerName: '',
+          customerPhone: '',
+          customerEmail: '',
+          customerCpf: '',
+          petName: '',
+          petBreed: '',
+          petSize: 'medium',
+          date: new Date().toISOString().split('T')[0],
+          time: '',
+          services: [],
+          hasFleas: false,
+          hasTangledFur: false,
+          isAggressive: false,
+          tangledCharge: 15,
+          status: 'pending',
+        });
+      }
+    }
+  }, [mode, booking, initialData, isOpen, reset]);
+
+  // Remove the old useEffect that was only for booking
+  /*
   useEffect(() => {
     if (booking && isOpen) {
       reset({
@@ -66,6 +135,7 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
       setSelectedDate(booking.date);
     }
   }, [booking, isOpen, reset]);
+  */
 
   useEffect(() => {
     if (watchedDate) {
@@ -110,15 +180,13 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
   };
 
   const onSubmit = (data: FormData) => {
-    if (!booking) return;
-
     const selectedServiceObjects = availableServices.filter(s => data.services.includes(s.id));
     const fleaCharge = data.hasFleas ? 20 : 0;
     const tangledCharge = data.hasTangledFur ? Number(data.tangledCharge) || 15 : 0;
     const bathService = selectedServiceObjects.find(s => s.name.toLowerCase().includes('banho'));
     const aggressiveCharge = data.isAggressive && bathService ? bathService.price * 0.5 : 0;
 
-    const updatedBooking: Partial<Booking> = {
+    const bookingData = {
       customer: {
         name: data.customerName,
         phone: data.customerPhone,
@@ -143,14 +211,25 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
         tangledCharge,
         aggressiveCharge,
       },
+      termsAccepted: true,
     };
 
-    updateBooking(booking.id, updatedBooking);
+    if (mode === 'edit' && booking) {
+      updateBooking(booking.id, bookingData);
+    } else if (mode === 'create') {
+      const newBooking: Booking = {
+        ...bookingData,
+        id: Date.now().toString(),
+        createdAt: new Date(),
+      };
+      addBooking(newBooking);
+    }
+
     onClose();
   };
 
   const handleDelete = () => {
-    if (booking && window.confirm('Tem certeza que deseja excluir este agendamento?')) {
+    if (booking && window.confirm('Are you sure you want to delete this booking?')) {
       deleteBooking(booking.id);
       onClose();
     }
@@ -158,12 +237,12 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
 
   const handleCancel = () => {
     if (booking) {
-      updateBooking(booking.id, { status: 'cancelado' });
+      updateBooking(booking.id, { status: 'cancelled' });
       onClose();
     }
   };
 
-  if (!isOpen || !booking) return null;
+  if (!isOpen) return null;
 
   const availableDates = getAvailableDates(settings.workingDays, 60); // 60 days ahead
 
@@ -176,7 +255,9 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
       >
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Edit Booking</h2>
+            <h2 className="text-2xl font-bold">
+              {mode === 'edit' ? 'Edit Booking' : 'Create New Booking'}
+            </h2>
             <button
               onClick={onClose}
               className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -433,26 +514,30 @@ export default function BookingDetailModal({ booking, isOpen, onClose }: Booking
               className="flex items-center space-x-2 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
             >
               <Save className="w-5 h-5" />
-              <span>Save Changes</span>
+              <span>{mode === 'edit' ? 'Save Changes' : 'Create Booking'}</span>
             </button>
 
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="flex items-center space-x-2 bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors"
-            >
-              <Ban className="w-5 h-5" />
-              <span>Cancel Booking</span>
-            </button>
+            {mode === 'edit' && (
+              <>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="flex items-center space-x-2 bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors"
+                >
+                  <Ban className="w-5 h-5" />
+                  <span>Cancel Booking</span>
+                </button>
 
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="flex items-center space-x-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
-            >
-              <Trash2 className="w-5 h-5" />
-              <span>Delete</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="flex items-center space-x-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
+                >
+                  <Trash2 className="w-5 h-5" />
+                  <span>Delete</span>
+                </button>
+              </>
+            )}
 
             <button
               type="button"
