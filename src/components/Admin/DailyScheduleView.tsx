@@ -316,6 +316,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             })}
           </div>
         </div>
+      </motion.div>
 
       {/* Legend */}
       <motion.div
@@ -352,6 +353,7 @@ export default function DailyScheduleView({ selectedDate, onDateChange, onBookin
             <span className="font-medium text-gray-700">Available</span>
           </div>
         </div>
+      </motion.div>
     </div>
   );
 }
