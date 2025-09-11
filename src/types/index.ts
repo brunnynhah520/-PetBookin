@@ -9,7 +9,7 @@ export interface Service {
 export interface Pet {
   name: string;
   breed: string;
-  size: 'pequeno' | 'médio' | 'grande';
+  size: 'small' | 'medium' | 'large';
 }
 
 export interface Customer {
@@ -27,7 +27,7 @@ export interface Booking {
   date: Date;
   time: string;
   totalPrice: number;
-  status: 'pendente' | 'confirmado' | 'concluido' | 'cancelado';
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   createdAt: Date;
   extraCharges: {
     fleas: boolean;

@@ -42,16 +42,16 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       pet: {
         name: 'Rex',
         breed: 'Labrador',
-        size: 'grande'
+        size: 'large'
       },
       services: [
-        { id: '1', name: 'Banho', duration: 60, price: 35.00 },
-        { id: '3', name: 'Tosa na Máquina', duration: 45, price: 40.00 }
+        { id: '1', name: 'Bath', duration: 60, price: 35.00 },
+        { id: '3', name: 'Machine Grooming', duration: 45, price: 40.00 }
       ],
       date: new Date(),
       time: '09:00',
       totalPrice: 75.00,
-      status: 'confirmado',
+      status: 'confirmed',
       createdAt: new Date(),
       extraCharges: {
         fleas: false,
@@ -74,16 +74,16 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       pet: {
         name: 'Bella',
         breed: 'Poodle',
-        size: 'médio'
+        size: 'medium'
       },
       services: [
-        { id: '1', name: 'Banho', duration: 60, price: 35.00 },
-        { id: '2', name: 'Tosa Higiênica', duration: 30, price: 25.00 }
+        { id: '1', name: 'Bath', duration: 60, price: 35.00 },
+        { id: '2', name: 'Sanitary Trim', duration: 30, price: 25.00 }
       ],
       date: new Date(),
       time: '14:00',
       totalPrice: 60.00,
-      status: 'pendente',
+      status: 'pending',
       createdAt: new Date(),
       extraCharges: {
         fleas: false,

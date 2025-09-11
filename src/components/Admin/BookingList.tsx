@@ -19,10 +19,10 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pendente': return 'bg-yellow-100 text-yellow-800';
-      case 'confirmado': return 'bg-green-100 text-green-800';
-      case 'concluido': return 'bg-gray-100 text-gray-800';
-      case 'cancelado': return 'bg-red-100 text-red-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'confirmed': return 'bg-green-100 text-green-800';
+      case 'completed': return 'bg-gray-100 text-gray-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
       default: return 'bg-blue-100 text-blue-800';
     }
   };
@@ -50,10 +50,10 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
           className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
         >
           <option value="all">All Statuses</option>
-          <option value="pendente">Pending</option>
-          <option value="confirmado">Confirmed</option>
-          <option value="concluido">Completed</option>
-          <option value="cancelado">Cancelled</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
         </select>
       </div>
 
@@ -75,10 +75,10 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
                   </div>
                   
                   <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(booking.status)}`}>
-                    {booking.status === 'pendente' ? 'Pending' : 
-                     booking.status === 'confirmado' ? 'Confirmed' : 
-                     booking.status === 'concluido' ? 'Completed' : 
-                     booking.status === 'cancelado' ? 'Cancelled' : booking.status}
+                    {booking.status === 'pending' ? 'Pending' : 
+                     booking.status === 'confirmed' ? 'Confirmed' : 
+                     booking.status === 'completed' ? 'Completed' : 
+                     booking.status === 'cancelled' ? 'Cancelled' : booking.status}
                   </div>
                 </div>
 
@@ -98,7 +98,7 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
                     <PawPrint className="w-5 h-5 text-purple-600 mt-1" />
                     <div>
                       <p className="font-medium text-gray-900">{booking.pet.name}</p>
-                      <p className="text-sm text-gray-500">{booking.pet.breed} - {booking.pet.size}</p>
+                      <p className="text-sm text-gray-500">{booking.pet.breed} - {booking.pet.size === 'pequeno' ? 'Small' : booking.pet.size === 'médio' ? 'Medium' : booking.pet.size === 'grande' ? 'Large' : booking.pet.size}</p>
                     </div>
                   </div>
                 </div>
@@ -125,10 +125,10 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
                   onChange={(e) => handleStatusChange(booking.id, e.target.value)}
                   className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent text-sm"
                 >
-                  <option value="pendente">Pending</option>
-                  <option value="confirmado">Confirmed</option>
-                  <option value="concluido">Completed</option>
-                  <option value="cancelado">Cancelled</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
                 </select>
 
                 <div className="flex space-x-2">
@@ -152,10 +152,10 @@ export default function BookingList({ bookings, statusFilter, onStatusFilterChan
             <p className="text-gray-500">
               {statusFilter === 'all' 
                 ? 'No bookings registered yet.'
-                : `No bookings with status "${statusFilter === 'pendente' ? 'Pending' : 
-                     statusFilter === 'confirmado' ? 'Confirmed' : 
-                     statusFilter === 'concluido' ? 'Completed' : 
-                     statusFilter === 'cancelado' ? 'Cancelled' : statusFilter}".`
+                : `No bookings with status "${statusFilter === 'pending' ? 'Pending' : 
+                     statusFilter === 'confirmed' ? 'Confirmed' : 
+                     statusFilter === 'completed' ? 'Completed' : 
+                     statusFilter === 'cancelled' ? 'Cancelled' : statusFilter}".`
               }
             </p>
           </div>
