@@ -265,7 +265,7 @@ export default function SubscriptionPage() {
 
         <div className="text-center mt-8">
           <p className="text-gray-600 text-sm">
-            All plans include customer support and regular updates. Cancel anytime.
+            Includes customer support and regular updates. Cancel anytime.
           </p>
         </div>
       </div>

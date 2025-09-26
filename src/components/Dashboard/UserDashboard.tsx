@@ -42,6 +42,13 @@ export default function UserDashboard() {
     }
   };
 
+  const getCurrentProduct = () => {
+    if (!subscription?.price_id) return null;
+    return products.find(product => 
+      product.prices.some(price => price.id === subscription.price_id)
+    );
+  };
+
   const getSubscriptionStatus = () => {
     if (!subscription) return 'No subscription';
     
@@ -126,6 +133,9 @@ export default function UserDashboard() {
                     }`} />
                     <div>
                       <p className="font-semibold text-gray-900">{getSubscriptionStatus()}</p>
+                      {getCurrentProduct() && (
+                        <p className="text-gray-600">Plan: {getCurrentProduct()!.name}</p>
+                      )}
                       {subscription?.current_period_end && (
                         <p className="text-sm text-gray-600">
                           {subscription.cancel_at_period_end ? 'Expires' : 'Renews'} on:{' '}
