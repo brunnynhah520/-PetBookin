@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { User, Crown, Calendar, Settings, LogOut, CreditCard } from 'lucide-react';
 import { useAuth, supabase } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { products } from '../../stripe-config';
 
 interface Subscription {
   subscription_status: string;

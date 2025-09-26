@@ -206,7 +206,7 @@ export default function SubscriptionPage() {
                 <div className="p-6">
                   <div className="mb-6">
                     <div className="text-4xl font-bold text-blue-900 mb-2">
-                      $247<span className="text-lg font-normal text-gray-600">/month</span>
+                      ${product.price}<span className="text-lg font-normal text-gray-600">/month</span>
                     </div>
                   </div>
 
